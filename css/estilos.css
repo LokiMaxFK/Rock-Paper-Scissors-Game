@@ -1,0 +1,124 @@
+*{
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    
+
+
+
+}
+
+body{
+    min-height: 100vh;
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    background-image: radial-gradient(hsl(214, 47%, 23%), hsl(237, 49%, 15%));
+    background-size: 100% 100%;
+}
+
+.header{
+    color: white;
+}
+
+.header__result::after{
+    content: attr(data-score);
+}
+
+.game{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "game";
+}
+
+
+.board{
+
+    grid-area: game;
+    width: max-content;
+    height: max-content;
+    color: white;
+    margin: 0 auto;
+    position: relative;
+
+
+    opacity: 1;
+    pointer-events: unset;
+    transition: .4s opacity ;
+}
+
+.board--hidde{
+    opacity: 0;
+    pointer-events: none;
+}
+
+.option{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    position: absolute;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 0 4px inset;
+}
+
+.option--finally{
+    position: unset;
+    display: block;
+}
+
+.option svg{
+    pointer-events: none;
+}
+
+.option:active{
+    transform: scale(.9);
+}
+
+
+.option--paper{
+    top: -50px;
+    left: -50px;
+    outline: 10px hsl(230, 89%, 62%)  solid;
+}
+
+.option--scissors{
+    top: -50px;
+    right: -50px;
+    outline: 10px hsl(39, 89%, 49%) solid;
+}
+
+.option--rock{
+    left: 0;
+    right: 0;
+    bottom: -50px;
+    margin: 0 auto;
+    outline: 10px solid hsl(349, 71%, 52%);
+}
+
+.result{
+    color: white;
+    grid-area: game;
+    margin: 0 auto;
+    opacity: 1;
+    pointer-events: unset;
+    transition: .4s opacity ;
+}
+
+.result--hidde{
+    opacity: 0;
+    pointer-events: none;
+}
+
+.result__options{
+    display: flex;
+    gap: 3rem;
+}
+
+.result__name{
+    font-size: 1rem;
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 2rem;
+}
