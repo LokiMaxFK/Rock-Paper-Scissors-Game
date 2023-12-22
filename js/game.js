@@ -17,13 +17,13 @@ const types = {
 };
 
 
-let score = 0;
+let scoreGlobal = 0;
 const optionsHouse = ["rock", "scissors", "paper"];
 
-const scoreElement = document.querySelector("[data-score]");
-const resetGameButton = document.querySelector("[data-id='reset-game']");
+const scoreElementText = document.querySelector(".header__result");
 const modalOpenButton = document.querySelector(".btn--rules");
 const modalCloseButton = document.querySelector(".modal__button");
+const resetGameButton = document.querySelector("[data-id='reset-game']");
 
 const board = document.querySelector(".board");
 const results = document.querySelector(".result");
@@ -34,14 +34,14 @@ const optionHouse = document.querySelector(".result__option--house");
 const resultFinallyText = document.querySelector(".result__finally");
 
 
-//Detectamos a que botón le dimos click
+//Detectamos si dimos click a una opción
 board.addEventListener("click", (e)=>{
-    console.log(e);
+
     if(e.target.matches(".option")){
         const type = e.target.dataset.type;
-        console.log(type);
         setWinner(types[type]);
     }
+
 });
 
 //Reiniciamos el juego
@@ -70,23 +70,24 @@ function setWinner(playerType){
     toggleShowSections();
 
     //Obtenemos el botón y los resultados del jugador y casa
-    const buttonPlayer = getElementByType(playerType.name);
-    const houseOptionName = houseOption(playerType.name);
-    const buttonHouse = getElementByType(houseOptionName);
+    const playerElement = getElementByType(playerType.name);
+    const houseOptionName = getHouseOption(playerType.name);
+
+    const houseElement = getElementByType(houseOptionName);
     const houseType = types[houseOptionName];
 
 
 
     //Agregamos los botones a la UI
-    optionPlayer.prepend(buttonPlayer);
-    optionHouse.prepend(buttonHouse);
+    optionPlayer.prepend(playerElement);
+    optionHouse.prepend(houseElement);
 
 
     // Determinamos el ganador.
     if(playerType.beats === houseType.name){
         resultFinallyText.textContent = "YOU WIN";
-        score++;
-        scoreElement.dataset.score = score;
+        scoreGlobal++;
+        scoreElementText.dataset.score = scoreGlobal;
     }else{
         resultFinallyText.textContent = "YOU LOSE";
     }
@@ -100,15 +101,14 @@ function toggleShowSections(){
 
 //Extraemos el tipo de imagen que vamos a poner
 function getElementByType(type){
-    const template = document.querySelector(`.${type}`);
-    console.log(template);
-    const content = template.content.cloneNode(true);
+    const templateOption = document.querySelector(`.${type}`);
+    const contentOption = templateOption.content.cloneNode(true);
 
-    return content;
+    return contentOption;
 }
 
 //Elegimos la opción que escogerá la casa
-function houseOption(optionPlayer){
+function getHouseOption(optionPlayer){
     const currentOptions = optionsHouse.filter((option) => option!==optionPlayer );
     const getRandomNumber = Math.round(Math.random());
 
