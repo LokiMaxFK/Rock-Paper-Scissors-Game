@@ -18,12 +18,16 @@ const types = {
 
 
 let score = 0;
+const optionsHouse = ["rock", "scissors", "paper"];
+
 const scoreElement = document.querySelector("[data-score]");
 const resetGameButton = document.querySelector("[data-id='reset-game']");
-const optionsHouse = ["rock", "scissors", "paper"];
+const modalOpenButton = document.querySelector(".btn--rules");
+const modalCloseButton = document.querySelector(".modal__button");
 
 const board = document.querySelector(".board");
 const results = document.querySelector(".result");
+const modal = document.querySelector(".modal");
 
 const optionPlayer = document.querySelector(".result__option--player");
 const optionHouse = document.querySelector(".result__option--house");
@@ -44,12 +48,22 @@ board.addEventListener("click", (e)=>{
 resetGameButton.addEventListener("click", ()=>{
     toggleShowSections();
 
-    console.log("Hecho")
     // Quitamos los valores establecidos anteriormente
     optionPlayer.firstElementChild.remove()
     optionHouse.firstElementChild.remove()
 
 });
+
+//Abrimos modal
+modalOpenButton.addEventListener("click", ()=>{
+    modal.showModal();
+});
+
+// Cerrar modal
+modalCloseButton.addEventListener("click", ()=>{
+    modal.close();
+});
+
 
 //Establecemos al ganador
 function setWinner(playerType){
