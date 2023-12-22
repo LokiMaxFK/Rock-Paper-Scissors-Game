@@ -19,13 +19,15 @@ const types = {
 
 let score = 0;
 const scoreElement = document.querySelector("[data-score]");
-const resetGame = document.querySelector("[data-id='reset-game']");
-const options = ["rock", "scissors", "paper"];
+const resetGameButton = document.querySelector("[data-id='reset-game']");
+const optionsHouse = ["rock", "scissors", "paper"];
+
 const board = document.querySelector(".board");
 const results = document.querySelector(".result");
+
 const optionPlayer = document.querySelector(".result__option--player");
 const optionHouse = document.querySelector(".result__option--house");
-const resultFinally = document.querySelector(".result__finally");
+const resultFinallyText = document.querySelector(".result__finally");
 
 
 //Detectamos a que botón le dimos click
@@ -39,8 +41,13 @@ board.addEventListener("click", (e)=>{
 });
 
 //Reiniciamos el juego
-resetGame.addEventListener("click", ()=>{
+resetGameButton.addEventListener("click", ()=>{
     toggleShowSections();
+
+    console.log("Hecho")
+    // Quitamos los valores establecidos anteriormente
+    optionPlayer.firstElementChild.remove()
+    optionHouse.firstElementChild.remove()
 
 });
 
@@ -48,22 +55,26 @@ resetGame.addEventListener("click", ()=>{
 function setWinner(playerType){
     toggleShowSections();
 
+    //Obtenemos el botón y los resultados del jugador y casa
     const buttonPlayer = getElementByType(playerType.name);
     const houseOptionName = houseOption(playerType.name);
-
-
     const buttonHouse = getElementByType(houseOptionName);
     const houseType = types[houseOptionName];
 
+
+
+    //Agregamos los botones a la UI
     optionPlayer.prepend(buttonPlayer);
     optionHouse.prepend(buttonHouse);
 
+
+    // Determinamos el ganador.
     if(playerType.beats === houseType.name){
-        resultFinally.textContent = "YOU WIN";
+        resultFinallyText.textContent = "YOU WIN";
         score++;
         scoreElement.dataset.score = score;
     }else{
-        resultFinally.textContent = "YOU LOOSE";
+        resultFinallyText.textContent = "YOU LOSE";
     }
 }
 
@@ -77,14 +88,14 @@ function toggleShowSections(){
 function getElementByType(type){
     const template = document.querySelector(`.${type}`);
     console.log(template);
-    const content = template.content;
+    const content = template.content.cloneNode(true);
 
     return content;
 }
 
 //Elegimos la opción que escogerá la casa
 function houseOption(optionPlayer){
-    const currentOptions = options.filter((option) => option!==optionPlayer );
+    const currentOptions = optionsHouse.filter((option) => option!==optionPlayer );
     const getRandomNumber = Math.round(Math.random());
 
     return currentOptions[getRandomNumber];
